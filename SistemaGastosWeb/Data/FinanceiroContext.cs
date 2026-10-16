@@ -11,7 +11,7 @@ namespace SistemaGastosWeb.Data
 
         public DbSet<UsuarioModel> Usuario { get; set; }
         public DbSet<GanhoDiarioModel> GanhoDiario { get; set; }
-        public DbSet<GastoDiarioModel> GastoDiario { get;set; }
+        public DbSet<GastoDiarioModel> GastoDiario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,9 +34,7 @@ namespace SistemaGastosWeb.Data
                 .HasForeignKey(g => g.FKUsuario)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            Console.WriteLine("Teste");
-
         }
-
     }
+
 }
