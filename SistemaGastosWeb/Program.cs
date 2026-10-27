@@ -1,4 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using SistemaGastosWeb.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// REGISTO DO DBCONTEXT (Adicionar esta linha)
+builder.Services.AddDbContext<FinanceiroContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

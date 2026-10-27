@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Movimentações";
+}
+
+<div class="container-fluid p-0">
+    <!-- Cabeçalho -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark m-0">Movimentações</h2>
+            <p class="text-muted small m-0">Acompanhe as entradas e saídas de caixa num só lugar</p>
+        </div>
+        <div>
+            <a asp-controller="GanhoDiario" asp-action="Criar" class="btn btn-primary-custom me-2">
+                <i class="bi bi-plus-lg me-1"></i> Novo Ganho
+            </a>
+            <a asp-controller="GastoDiario" asp-action="Criar" class="btn btn-outline-danger" style="border-radius: 8px;">
+                <i class="bi bi-dash-lg me-1"></i> Novo Gasto
+            </a>
+        </div>
+    </div>
+
+    <!-- Resumo do Caixa -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="custom-card mb-0">
+                <div class="text-muted small fw-semibold mb-1">Total Entradas</div>
+                <div class="fs-3 fw-bold text-success">R$ 0,00</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="custom-card mb-0">
+                <div class="text-muted small fw-semibold mb-1">Total Saídas</div>
+                <div class="fs-3 fw-bold text-danger">R$ 0,00</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="custom-card mb-0">
+                <div class="text-muted small fw-semibold mb-1">Saldo do Período</div>
+                <div class="fs-3 fw-bold text-dark">R$ 0,00</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela Unificada de Entradas e Saídas -->
+    <div class="custom-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold text-dark m-0">Histórico do Caixa</h5>
+            <span class="badge bg-light text-secondary">0 registo(s)</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table custom-table">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                            Nenhuma movimentação registada até ao momento.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

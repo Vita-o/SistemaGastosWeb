@@ -1,8 +1,133 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Visão Geral";
 }
 
-<div class="text-center">
-    <h1 class="display-4">MEU PRIMEIRO SITE</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid p-0">
+    <!-- Título do Painel -->
+    <div class="mb-4">
+        <h2 class="fw-bold text-dark m-0">Resumo Financeiro</h2>
+    </div>
+
+    <!-- Linha 1: Cartões de Resumo -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="custom-card mb-0 h-100">
+                <div class="text-muted small fw-semibold mb-2">Saldo Atual</div>
+                <div class="fs-2 fw-bold text-success">R$ 15.420,50</div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="custom-card mb-0 h-100">
+                <div class="text-muted small fw-semibold mb-2">Receitas este Mês</div>
+                <div class="fs-3 fw-bold text-dark">
+                    <i class="bi bi-arrow-up text-success fs-5 me-1"></i>R$ 8.900,00
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="custom-card mb-0 h-100">
+                <div class="text-muted small fw-semibold mb-2">Despesas este Mês</div>
+                <div class="fs-3 fw-bold text-dark">
+                    <i class="bi bi-arrow-down text-danger fs-5 me-1"></i>R$ 4.350,00
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Linha 2: Gráficos -->
+    <div class="row g-3">
+        <!-- Gráfico de Linha (Evolução) -->
+        <div class="col-lg-8">
+            <div class="custom-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold m-0 text-dark">Evolução Patrimonial</h5>
+                    <span class="badge bg-light text-secondary">Últimos 6 meses</span>
+                </div>
+                <div style="height: 280px; position: relative;">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico de Rosca (Categorias) -->
+        <div class="col-lg-4">
+            <div class="custom-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold m-0 text-dark">Gastos por Categoria</h5>
+                </div>
+                <div style="height: 280px; position: relative;" class="d-flex align-items-center justify-content-center">
+                    <canvas id="doughnutChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Script de Inicialização dos Gráficos -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 1. Gráfico de Evolução Patrimonial
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+        const gradient = ctxLine.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(16, 185, 129, 0.25)');
+        gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['01 mês', '02 mês', '03 mês', '04 mês', '05 mês', '06 mês'],
+                datasets: [{
+                    label: 'Saldo (R$)',
+                    data: [1200, 1568.60, 4000, 8500, 11000, 15420.50],
+                    borderColor: '#10b981',
+                    borderWidth: 3,
+                    backgroundColor: gradient,
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: '#10b981',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: {
+                        grid: { borderDash: [4, 4], color: '#f1f5f9' },
+                        ticks: { callback: function (v) { return 'R$ ' + v; } }
+                    }
+                }
+            }
+        });
+
+        // 2. Gráfico de Categorias (Rosca)
+        const ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
+        new Chart(ctxDoughnut, {
+            type: 'doughnut',
+            data: {
+                labels: ['Moradia', 'Alimentação', 'Transporte', 'Lazer'],
+                datasets: [{
+                    data: [45, 25, 15, 15],
+                    backgroundColor: ['#10b981', '#3b82f6', '#f97316', '#8b5cf6'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { usePointStyle: true, boxWidth: 8, font: { size: 12 } }
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+    });
+</script>
