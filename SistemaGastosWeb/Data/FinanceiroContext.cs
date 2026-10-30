@@ -10,25 +10,17 @@ namespace SistemaGastosWeb.Data
         }
 
         public DbSet<UsuarioModel> Usuario { get; set; }
-        public DbSet<GanhoDiarioModel> GanhoDiario { get; set; }
-        public DbSet<GastoDiarioModel> GastoDiario { get; set; }
+        public DbSet<MovimentacoesModel> Movimentacoes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<UsuarioModel>().ToTable("Usuario");
-            modelBuilder.Entity<GanhoDiarioModel>().ToTable("GanhoDiario");
-            modelBuilder.Entity<GastoDiarioModel>().ToTable("GastoDiario");
+            modelBuilder.Entity<MovimentacoesModel>().ToTable("Movimentacoes");
 
 
-            modelBuilder.Entity<GanhoDiarioModel>()
-                .HasOne(g => g.Usuario)
-                .WithMany()
-                .HasForeignKey(g => g.FKUsuario)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<GastoDiarioModel>()
+            modelBuilder.Entity<MovimentacoesModel>()
                 .HasOne(g => g.Usuario)
                 .WithMany()
                 .HasForeignKey(g => g.FKUsuario)

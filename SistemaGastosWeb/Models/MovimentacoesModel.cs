@@ -2,7 +2,7 @@
 
 namespace SistemaGastosWeb.Models
 {
-    public class GastoDiarioModel
+    public class MovimentacoesModel
     {
         public int Id { get; set; }
 
@@ -11,11 +11,14 @@ namespace SistemaGastosWeb.Models
 
         public virtual UsuarioModel? Usuario { get; set; }
 
+        public string? Tipo { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
-        public decimal ValorDoDia { get; set; }
+        public decimal Valor { get; set; }
 
         public DateTime Data { get; set; }
 
         public string? Descricao { get; set; }
+
     }
 }

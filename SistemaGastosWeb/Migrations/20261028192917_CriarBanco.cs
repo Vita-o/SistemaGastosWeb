@@ -27,43 +27,22 @@ namespace SistemaGastosWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GanhoDiario",
+                name: "Movimentacao",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FKUsuario = table.Column<int>(type: "int", nullable: false),
-                    ValorDoDia = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Data = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GanhoDiario", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_GanhoDiario_Usuario_FKUsuario",
-                        column: x => x.FKUsuario,
-                        principalTable: "Usuario",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GastoDiario",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FKUsuario = table.Column<int>(type: "int", nullable: false),
-                    ValorDoDia = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Data = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GastoDiario", x => x.Id);
+                    table.PrimaryKey("PK_Movimentacao", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GastoDiario_Usuario_FKUsuario",
+                        name: "FK_Movimentacao_Usuario_FKUsuario",
                         column: x => x.FKUsuario,
                         principalTable: "Usuario",
                         principalColumn: "Id",
@@ -71,13 +50,8 @@ namespace SistemaGastosWeb.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GanhoDiario_FKUsuario",
-                table: "GanhoDiario",
-                column: "FKUsuario");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GastoDiario_FKUsuario",
-                table: "GastoDiario",
+                name: "IX_Movimentacao_FKUsuario",
+                table: "Movimentacao",
                 column: "FKUsuario");
         }
 
@@ -85,10 +59,7 @@ namespace SistemaGastosWeb.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GanhoDiario");
-
-            migrationBuilder.DropTable(
-                name: "GastoDiario");
+                name: "Movimentacao");
 
             migrationBuilder.DropTable(
                 name: "Usuario");

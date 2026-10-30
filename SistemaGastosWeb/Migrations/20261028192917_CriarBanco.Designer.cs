@@ -12,7 +12,7 @@ using SistemaGastosWeb.Data;
 namespace SistemaGastosWeb.Migrations
 {
     [DbContext(typeof(FinanceiroContext))]
-    [Migration("20261027165716_CriarBanco")]
+    [Migration("20261028192917_CriarBanco")]
     partial class CriarBanco
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace SistemaGastosWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SistemaGastosWeb.Models.GanhoDiarioModel", b =>
+            modelBuilder.Entity("SistemaGastosWeb.Models.MovimentacaoModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,41 +42,17 @@ namespace SistemaGastosWeb.Migrations
                     b.Property<int>("FKUsuario")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("ValorDoDia")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FKUsuario");
-
-                    b.ToTable("GanhoDiario", (string)null);
-                });
-
-            modelBuilder.Entity("SistemaGastosWeb.Models.GastoDiarioModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descricao")
+                    b.Property<string>("Tipo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FKUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ValorDoDia")
+                    b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FKUsuario");
 
-                    b.ToTable("GastoDiario", (string)null);
+                    b.ToTable("Movimentacao", (string)null);
                 });
 
             modelBuilder.Entity("SistemaGastosWeb.Models.UsuarioModel", b =>
@@ -104,18 +80,7 @@ namespace SistemaGastosWeb.Migrations
                     b.ToTable("Usuario", (string)null);
                 });
 
-            modelBuilder.Entity("SistemaGastosWeb.Models.GanhoDiarioModel", b =>
-                {
-                    b.HasOne("SistemaGastosWeb.Models.UsuarioModel", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("FKUsuario")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("SistemaGastosWeb.Models.GastoDiarioModel", b =>
+            modelBuilder.Entity("SistemaGastosWeb.Models.MovimentacaoModel", b =>
                 {
                     b.HasOne("SistemaGastosWeb.Models.UsuarioModel", "Usuario")
                         .WithMany()
