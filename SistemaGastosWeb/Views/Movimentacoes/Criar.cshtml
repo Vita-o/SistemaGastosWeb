@@ -1,0 +1,88 @@
+﻿@model SistemaGastosWeb.Models.MovimentacoesModel
+
+@{
+    ViewData["Title"] = ViewBag.TituloTela ?? "Nova Movimentação";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h4 class="mb-0">@ViewBag.TituloTela</h4>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Movimentacoes" asp-action="Criar" method="post">
+                <!-- Campo Oculto para o Tipo (Ganho/Gasto) -->
+                <input type="hidden" asp-for="Tipo" />
+
+                <div class="mb-3">
+                    <label asp-for="Descricao" class="form-label">Descrição</label>
+                    <input asp-for="Descricao" class="form-control" placeholder="Ex: Venda de produto, Almoço..." required />
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Valor" class="form-label fw-semibold">Valor (R$)</label>
+                    <div class="input-group">
+                        <span class="input-group-text fw-bold">R$</span>
+                        <input asp-for="Valor"
+                               type="text"
+                               id="campoValor"
+                               class="form-control form-control-lg fw-bold"
+                               placeholder="0,00"
+                               inputmode="numeric"
+                               required />
+                    </div>
+                    <span asp-validation-for="Valor" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Data" class="form-label">Data</label>
+                    <input asp-for="Data" type="date" class="form-control" required />
+                    <span asp-validation-for="Data" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                    <button type="submit" class="btn @(Model?.Tipo == "Ganho" ? "btn-success" : "btn-danger")">
+                        Salvar @Model?.Tipo
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        const campoValor = document.getElementById('campoValor');
+
+        function formatarEstiloBanco(valor) {
+            let digitos = valor.replace(/\D/g, '');
+            digitos = digitos.replace(/^0+/, '');
+            digitos = digitos.padStart(3, '0'); /
+
+            let centavos = digitos.slice(-2);
+            let inteiros = digitos.slice(0, -2);
+            inteiros = inteiros.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            return `${inteiros},${centavos}`;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            campoValor.value = formatarEstiloBanco(campoValor.value);
+        });
+
+        campoValor.addEventListener('input', function (e) {
+            e.target.value = formatarEstiloBanco(e.target.value);
+        });
+
+        campoValor.addEventListener('click', function (e) {
+            const len = e.target.value.length;
+            e.target.setSelectionRange(len, len);
+        });
+    </script>
+}

@@ -1,0 +1,51 @@
+﻿@model SistemaGastosWeb.Models.MovimentacoesModel
+
+@{
+    ViewData["Title"] = "Confirmar Exclusão";
+}
+
+<div class="container mt-4" style="max-width: 550px;">
+    <div class="card shadow-sm border-danger">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar Exclusão</h5>
+        </div>
+        <div class="card-body">
+            <p class="text-muted mb-4">Tem certeza de que deseja excluir permanentemente esta movimentação? Esta ação não poderá ser desfeita.</p>
+
+            <div class="bg-light p-3 rounded mb-4 border">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 text-secondary">Tipo:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge @(Model.Tipo == "Ganho" ? "bg-success" : "bg-danger")">
+                            @Model.Tipo
+                        </span>
+                    </dd>
+
+                    <dt class="col-sm-4 text-secondary">Descrição:</dt>
+                    <dd class="col-sm-8 fw-semibold text-dark">@Model.Descricao</dd>
+
+                    <dt class="col-sm-4 text-secondary">Valor:</dt>
+                    <dd class="col-sm-8 fw-bold @(Model.Tipo == "Ganho" ? "text-success" : "text-danger")">
+                        R$ @Model.Valor.ToString("N2")
+                    </dd>
+
+                    <dt class="col-sm-4 text-secondary mb-0">Data:</dt>
+                    <dd class="col-sm-8 mb-0">@Model.Data.ToString("dd/MM/yyyy")</dd>
+                </dl>
+            </div>
+
+            <form asp-controller="Movimentacoes" asp-action="ExcluirConfirmado" method="post">
+                <input type="hidden" asp-for="Id" />
+                
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-controller="Movimentacoes" asp-action="Index" class="btn btn-outline-secondary">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i> Sim, Excluir
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
