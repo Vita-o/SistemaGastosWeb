@@ -1,9 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SistemaGastosWeb.Data;
+using SistemaGastosWeb.Models;
+using System.Linq;
 
 namespace SistemaGastosWeb.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly FinanceiroContext _context;
+
+        public LoginController(FinanceiroContext context)
+        {
+            _context = context;
+        }  
+
+
+
         // GET: /Login (ou /Login/Index)
         [HttpGet]
         public IActionResult Index()
@@ -15,7 +27,7 @@ namespace SistemaGastosWeb.Controllers
         [HttpGet]
         public IActionResult Cadastro()
         {
-            return View(); // Abre a View Views/Login/Cadastro.cshtml
+            return View(); 
         }
 
         // POST: /Login/Entrar
@@ -28,9 +40,18 @@ namespace SistemaGastosWeb.Controllers
 
         // POST: /Login/Cadastrar
         [HttpPost]
-        public IActionResult Cadastrar(string nome, string email, string senha)
+        public IActionResult Cadastrar(UsuarioModel usuario)
         {
-            // Lógica de salvar o utilizador virá aqui no futuro
+            if (usuario.Nome == null) 
+            {
+                ViewBag.Erro = "Falta Campo a ser Preenchido ";
+                return View("Cadastro");
+            } else if (_context.Usuario.any())
+            {
+
+            }
+
+
             return RedirectToAction("Index");
         }
     }
